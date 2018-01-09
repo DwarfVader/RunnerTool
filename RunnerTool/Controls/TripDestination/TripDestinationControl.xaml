@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="RunnerTool.TripDestinationControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:RunnerTool"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Width="300"
+	Height="300"
+	d:DataContext="{x:Static local:DesignModels.TripDestinationDesignModel}"
+	d:DesignHeight="300"
+	d:DesignWidth="300"
+	local:FocusProperty.Value="True"
+	mc:Ignorable="d">
+
+	<UserControl.InputBindings>
+		<KeyBinding Key="Esc"
+			Command="{Binding CloseCommand}" />
+	</UserControl.InputBindings>
+
+	<Border Background="{Binding TripDestination.Destination, Converter={local:DestinationTypeToBackgroundConverter}}"
+		CornerRadius="10">
+		<Grid Margin="5">
+			<Grid.RowDefinitions>
+				<!-- top section -->
+				<RowDefinition Height="Auto" />
+				<!-- visit purpose section -->
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<!-- top section -->
+			<Grid Margin="5 0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<!-- upper row -->
+				<Grid>
+					<!-- is goodie giver info -->
+					<TextBlock Text="{StaticResource FontAwesomeHeartIcon}"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Center"
+						local:LTokenTooltip.Value="goodieGiverSmiley"
+						FontFamily="{StaticResource FontAwesome}"
+						FontSize="{StaticResource Normal}"
+						Foreground="{StaticResource VeryDarkGrayBrush}"
+						Visibility="{Binding TripDestination.Destination.IsGoodieGiver, Converter={local:BooleanToVisibilityConverter}}" />
+
+					<!-- destination -->
+					<TextBlock Text="{Binding TripDestination.Destination.Name}"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						FontFamily="{StaticResource LatoRegular}"
+						FontSize="{StaticResource Normal}" />
+
+					<!-- close button -->
+					<TextBlock Style="{StaticResource CloseIconTextBlock}"
+						Margin="0">
+						<TextBlock.InputBindings>
+							<MouseBinding Command="{Binding CloseCommand}"
+								MouseAction="LeftClick" />
+						</TextBlock.InputBindings>
+					</TextBlock>
+				</Grid>
+
+				<!-- lower row -->
+				<Grid Grid.Row="1">
+					<!-- sender -->
+					<TextBlock Text="{Binding TripDestination.Sender.Name}"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Center"
+						FontFamily="{StaticResource LatoRegular}"
+						FontSize="{StaticResource Normal}" />
+
+					<!-- trip date -->
+					<TextBlock Text="{Binding TripDestination.Trip.Date, Converter={local:DateToShortDateConverter}}"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Center"
+						FontFamily="{StaticResource LatoRegular}"
+						FontSize="{StaticResource Normal}" />
+				</Grid>
+			</Grid>
+
+			<!-- visit purpose section -->
+			<Border Grid.Row="1"
+				Background="{StaticResource VeryDarkGrayBrush}"
+				CornerRadius="10">
+				<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+					VerticalScrollBarVisibility="Auto">
+					<ItemsControl ItemsSource="{Binding TripDestination.VisitPurposes}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Margin="5"
+									Padding="5 0"
+									HorizontalAlignment="Left"
+									local:LToken.Value="{Binding Type}"
+									FontFamily="{StaticResource LatoRegular}"
+									FontSize="{StaticResource Normal}"
+									Foreground="White" />
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</ScrollViewer>
+			</Border>
+		</Grid>
+	</Border>
+</UserControl>

@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AF7D156D-B8DB-4CDD-A27B-C98177446E21}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>RunnerTool</RootNamespace>
+    <AssemblyName>RunnerTool</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Windows.Shell, Version=3.5.41019.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Windows.Shell.3.5.41019\lib\net46\Microsoft.Windows.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.1.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.1\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged">
+      <HintPath>..\packages\PropertyChangedContent.Fody\PropertyChanged.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChangedContent.Fody">
+      <HintPath>..\packages\PropertyChangedContent.Fody\PropertyChangedContent.Fody.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AttachedProperties\AutoCheckOtherProperty.cs" />
+    <Compile Include="AttachedProperties\LanguageProperties.cs" />
+    <Compile Include="AttachedProperties\FocusProperty.cs" />
+    <Compile Include="AttachedProperties\HalfSizeProperty.cs" />
+    <Compile Include="AttachedProperties\InputControlProperties.cs" />
+    <Compile Include="AttachedProperties\SearchTextChangedProperty.cs" />
+    <Compile Include="Controls\CreateVacation\CreateVacationControl.xaml.cs">
+      <DependentUpon>CreateVacationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CreateVacation\CreateVacationViewModel.cs" />
+    <Compile Include="Controls\CreateSender\CreateSenderControl.xaml.cs">
+      <DependentUpon>CreateSenderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CreateDestination\CreateDestinationControl.xaml.cs">
+      <DependentUpon>CreateDestinationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CreateDestination\CreateDestinationViewModel.cs" />
+    <Compile Include="Controls\CreateSender\CreateSenderViewModel.cs" />
+    <Compile Include="Controls\DestinationSelection\DestinationSelectionViewModel.cs" />
+    <Compile Include="Controls\ExecuteTripDestinationListItem\ExecuteTripDestinationListItemControl.xaml.cs">
+      <DependentUpon>ExecuteTripDestinationListItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExecuteTripDestinationListItem\ExecuteTripDestinationListItemViewModel.cs" />
+    <Compile Include="Controls\ExecuteTripDestination\ExecuteTripDestinationControl.xaml.cs">
+      <DependentUpon>ExecuteTripDestinationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExecuteTripDestination\ExecuteTripDestinationViewModel.cs" />
+    <Compile Include="Controls\ExecuteTripSenderListItem\ExecuteTripSenderListItemControl.xaml.cs">
+      <DependentUpon>ExecuteTripSenderListItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExecuteTripSenderListItem\ExecuteTripSenderListItemViewModel.cs" />
+    <Compile Include="Controls\ExecuteTrip\ExecuteTripControl.xaml.cs">
+      <DependentUpon>ExecuteTripControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExecuteTrip\ExecuteTripViewModel.cs" />
+    <Compile Include="Controls\InputControls\BaseInputControl.xaml.cs">
+      <DependentUpon>BaseInputControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\InputControls\BaseInputViewModel.cs" />
+    <Compile Include="Controls\InputControls\DatePickerInputViewModel.cs" />
+    <Compile Include="Controls\InputControls\CheckBoxInputViewModel.cs" />
+    <Compile Include="Controls\InputControls\ComboBoxInputViewModel.cs" />
+    <Compile Include="Controls\InputControls\DayOfWeekSelectionInputViewModel.cs" />
+    <Compile Include="Controls\InputControls\StringInputViewModel.cs" />
+    <Compile Include="Controls\ListItem\BaseListItemViewModel.cs" />
+    <Compile Include="Controls\ListItem\NewDestinationListItemViewModel.cs" />
+    <Compile Include="Controls\ListItem\DestinationVisitPurposeSelectionListItemViewModel.cs" />
+    <Compile Include="Controls\ListItem\ListItemControl.xaml.cs">
+      <DependentUpon>ListItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListItem\DestinationListItemViewModel.cs" />
+    <Compile Include="Controls\VacationListItem\NewVacationListItemViewModel.cs" />
+    <Compile Include="Controls\ListItem\NewSenderListItemViewModel.cs" />
+    <Compile Include="Controls\ListItem\SenderListItemViewModel.cs" />
+    <Compile Include="Controls\CreateTrip\CreateTripViewModel.cs" />
+    <Compile Include="Controls\DestinationSelection\DestinationSelectionControl.xaml.cs">
+      <DependentUpon>DestinationSelectionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SenderSelection\SenderSelectionControl.xaml.cs">
+      <DependentUpon>SenderSelectionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SenderSelection\SenderSelectionViewModel.cs" />
+    <Compile Include="Controls\DestinationSenderList\DestinationSenderListViewModel.cs" />
+    <Compile Include="Controls\TripDestination\TripDestinationControl.xaml.cs">
+      <DependentUpon>TripDestinationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListItem\ViewTripDestinationItemViewModel.cs" />
+    <Compile Include="Controls\VacationListItem\VacationListItemControl.xaml.cs">
+      <DependentUpon>VacationListItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VacationListItem\VacationListItemViewModel.cs" />
+    <Compile Include="Controls\TripListItem\TripListItemControl.xaml.cs">
+      <DependentUpon>TripListItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TripListItem\TripListItemViewModel.cs" />
+    <Compile Include="Controls\TripList\TripListControl.xaml.cs">
+      <DependentUpon>TripListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TripList\TripListViewModel.cs" />
+    <Compile Include="Controls\TripDestination\TripDestinationViewModel.cs" />
+    <Compile Include="Controls\SenderDestinationList\SenderDestinationListControl.xaml.cs">
+      <DependentUpon>SenderDestinationListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DestinationSenderList\DestinationSenderListControl.xaml.cs">
+      <DependentUpon>DestinationSenderListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SenderDestinationList\SenderDestinationListViewModel.cs" />
+    <Compile Include="Controls\ViewTrip\ViewTripControl.xaml.cs">
+      <DependentUpon>ViewTripControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ViewTrip\ViewTripViewModel.cs" />
+    <Compile Include="Controls\VisitPurposeSelectionList\VisitPurposeSelectionListViewModel.cs" />
+    <Compile Include="Controls\VisitPurposeSelection\VisitPurposeSelectionViewModel.cs" />
+    <Compile Include="Controls\VisitPurposeSelectionList\VisitPurposeSelectionListControl.xaml.cs">
+      <DependentUpon>VisitPurposeSelectionListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CreateTrip\CreateTripControl.xaml.cs">
+      <DependentUpon>CreateTripControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VisitPurposeSelection\VisitPurposeSelectionControl.xaml.cs">
+      <DependentUpon>VisitPurposeSelectionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DesignModels\DesignModels.cs" />
+    <Compile Include="IoC\IoC.cs" />
+    <Compile Include="Language\Languages.cs" />
+    <Compile Include="Util\Base\BaseAttachedProperty.cs" />
+    <Compile Include="Util\Base\BaseValueConverter.cs" />
+    <Compile Include="Util\Base\BaseViewModel.cs" />
+    <Compile Include="Util\Base\ExpressionHelpers.cs" />
+    <Compile Include="Util\Comparators.cs" />
+    <Compile Include="Util\EnumHelpers.cs" />
+    <Compile Include="Util\ExtensionMethods\DayOfWeekExtensions.cs" />
+    <Compile Include="Util\ExtensionMethods\StringExtensions.cs" />
+    <Compile Include="Util\ExtensionMethods\TripExtensions.cs" />
+    <Compile Include="Util\FrameHistory.cs" />
+    <Compile Include="Util\Base\RelayCommand.cs" />
+    <Compile Include="Util\Base\RelayParameterizedCommand.cs" />
+    <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\ColorConverters.cs" />
+    <Compile Include="ValueConverters\DateTimeConverters.cs" />
+    <Compile Include="ValueConverters\FilterTypeConverters.cs" />
+    <Compile Include="ValueConverters\SenderTypeConverters.cs" />
+    <Compile Include="Window\WindowViewModel.cs" />
+    <Compile Include="Window\WindowResizer.cs" />
+    <Page Include="Controls\CreateVacation\CreateVacationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CreateSender\CreateSenderControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CreateDestination\CreateDestinationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ExecuteTripDestinationListItem\ExecuteTripDestinationListItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ExecuteTripDestination\ExecuteTripDestinationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ExecuteTripSenderListItem\ExecuteTripSenderListItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ExecuteTrip\ExecuteTripControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\InputControls\BaseInputControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ListItem\ListItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DestinationSelection\DestinationSelectionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SenderSelection\SenderSelectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TripDestination\TripDestinationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\VacationListItem\VacationListItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TripListItem\TripListItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TripList\TripListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SenderDestinationList\SenderDestinationListControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DestinationSenderList\DestinationSenderListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ViewTrip\ViewTripControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\VisitPurposeSelectionList\VisitPurposeSelectionListControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\VisitPurposeSelection\VisitPurposeSelectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Controls\CreateTrip\CreateTripControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Texts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Fonts\fontawesome-webfont.ttf" />
+    <Resource Include="Fonts\Lato-Black.ttf" />
+    <Resource Include="Fonts\Lato-BlackItalic.ttf" />
+    <Resource Include="Fonts\Lato-Bold.ttf" />
+    <Resource Include="Fonts\Lato-BoldItalic.ttf" />
+    <Resource Include="Fonts\Lato-Hairline.ttf" />
+    <Resource Include="Fonts\Lato-HairlineItalic.ttf" />
+    <Resource Include="Fonts\Lato-Heavy.ttf" />
+    <Resource Include="Fonts\Lato-HeavyItalic.ttf" />
+    <Resource Include="Fonts\Lato-Italic.ttf" />
+    <Resource Include="Fonts\Lato-Light.ttf" />
+    <Resource Include="Fonts\Lato-LightItalic.ttf" />
+    <Resource Include="Fonts\Lato-Medium.ttf" />
+    <Resource Include="Fonts\Lato-MediumItalic.ttf" />
+    <Resource Include="Fonts\Lato-Regular.ttf" />
+    <Resource Include="Fonts\Lato-Semibold.ttf" />
+    <Resource Include="Fonts\Lato-SemiboldItalic.ttf" />
+    <Resource Include="Fonts\Lato-Thin.ttf" />
+    <Resource Include="Fonts\Lato-ThinItalic.ttf" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RunnerTool.Core\RunnerTool.Core.csproj">
+      <Project>{91a1f147-13b3-4ab9-b0d4-d06d3a561602}</Project>
+      <Name>RunnerTool.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="TODOs.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.2.1.3\build\netstandard1.2\Fody.targets" Condition="Exists('..\packages\Fody.2.1.3\build\netstandard1.2\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Verwenden Sie die Wiederherstellung von NuGet-Paketen, um die fehlenden Dateien herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.2.1.3\build\netstandard1.2\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.1.3\build\netstandard1.2\Fody.targets'))" />
+  </Target>
+</Project>

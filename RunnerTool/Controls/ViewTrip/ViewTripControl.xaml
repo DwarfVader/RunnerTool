@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="RunnerTool.ViewTripControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:RunnerTool"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	d:DataContext="{x:Static local:DesignModels.ViewTripDesignModel}"
+	d:DesignHeight="400"
+	d:DesignWidth="600"
+	local:FocusProperty.Value="True"
+	Visibility="{Binding IsVisible, Converter={local:BooleanToVisibilityConverter}}"
+	mc:Ignorable="d">
+
+	<UserControl.InputBindings>
+		<KeyBinding Key="Esc"
+			Command="{Binding CloseCommand}" />
+	</UserControl.InputBindings>
+
+	<Grid>
+		<Border Background="{StaticResource CyanBackgroundBrush}"
+			CornerRadius="10">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+
+				<!-- title bar -->
+				<Grid Margin="10 5">
+					<!-- left buttons -->
+					<StackPanel HorizontalAlignment="Left"
+						VerticalAlignment="Center"
+						Orientation="Horizontal">
+						<!-- group by senders -->
+						<TextBlock Text="{StaticResource FontAwesomeSenderIcon}"
+							Margin="5 0"
+							VerticalAlignment="Center"
+							local:LTokenTooltip.Value="groupBySenders"
+							FontFamily="{StaticResource FontAwesome}"
+							FontSize="{StaticResource Normal}">
+							<TextBlock.InputBindings>
+								<MouseBinding Command="{Binding GroupBySendersCommand}"
+									MouseAction="LeftClick" />
+							</TextBlock.InputBindings>
+						</TextBlock>
+
+						<!-- group by destinations -->
+						<TextBlock Text="{StaticResource FontAwesomeDestinationIcon}"
+							Margin="5 0 0 0"
+							VerticalAlignment="Center"
+							local:LTokenTooltip.Value="groupByDestinations"
+							FontFamily="{StaticResource FontAwesome}"
+							FontSize="{StaticResource Normal}">
+							<TextBlock.InputBindings>
+								<MouseBinding Command="{Binding GroupByDestinationsCommand}"
+									MouseAction="LeftClick" />
+							</TextBlock.InputBindings>
+						</TextBlock>
+					</StackPanel>
+
+					<!-- title text -->
+					<TextBlock Text="{Binding TitleText}"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						FontFamily="{StaticResource LatoRegular}"
+						FontSize="{StaticResource Normal}">
+					</TextBlock>
+
+					<!-- right buttons -->
+					<StackPanel HorizontalAlignment="Right"
+						VerticalAlignment="Center"
+						Orientation="Horizontal">
+						<!-- edit button -->
+						<TextBlock Text="{StaticResource FontAwesomeEditIcon}"
+							Margin="0 0 5 0"
+							VerticalAlignment="Center"
+							local:LTokenTooltip.Value="editTrip"
+							FontFamily="{StaticResource FontAwesome}"
+							FontSize="{StaticResource Normal}"
+							Foreground="{StaticResource VeryDarkGrayBrush}"
+							Visibility="{Binding IsEditButtonVisible, Converter={local:BooleanToVisibilityConverter}}">
+							<TextBlock.InputBindings>
+								<MouseBinding Command="{Binding EditTripCommand}"
+									MouseAction="LeftClick" />
+							</TextBlock.InputBindings>
+						</TextBlock>
+
+						<!-- close button -->
+						<TextBlock Style="{StaticResource CloseIconTextBlock}">
+							<TextBlock.InputBindings>
+								<MouseBinding Command="{Binding CloseCommand}"
+									MouseAction="LeftClick" />
+							</TextBlock.InputBindings>
+						</TextBlock>
+					</StackPanel>
+				</Grid>
+
+				<Grid Grid.Row="1"
+					Margin="4">
+					<!-- grouped by senders -->
+					<Border Background="{StaticResource VeryDarkGrayBrush}"
+						CornerRadius="10"
+						Visibility="{Binding IsViewTripSenderControlVisible, Converter={local:BooleanToVisibilityConverter}}">
+						<ScrollViewer VerticalScrollBarVisibility="Hidden">
+							<ItemsControl ItemsSource="{Binding SenderVMs}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<local:SenderDestinationListControl />
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</ScrollViewer>
+					</Border>
+
+					<!-- grouped by destinations -->
+					<Border Background="{StaticResource VeryDarkGrayBrush}"
+						CornerRadius="10"
+						Visibility="{Binding IsViewTripDestinationControlVisible, Converter={local:BooleanToVisibilityConverter}}">
+						<ScrollViewer VerticalScrollBarVisibility="Hidden">
+							<ItemsControl ItemsSource="{Binding DestinationVMs}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<local:DestinationSenderListControl />
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</ScrollViewer>
+					</Border>
+				</Grid>
+			</Grid>
+		</Border>
+
+		<!-- overlay -->
+		<Grid Background="{StaticResource VeryDarkGrayBrushTransparent}"
+			Visibility="{Binding IsOverlayVisible, Converter={local:BooleanToVisibilityConverter}}">
+			<!-- sender selection -->
+			<local:SenderSelectionControl HorizontalAlignment="Center"
+				VerticalAlignment="Center" />
+
+			<!-- visit purpose selection -->
+			<local:TripDestinationControl />
+		</Grid>
+	</Grid>
+</UserControl>

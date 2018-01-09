@@ -1,0 +1,214 @@
+﻿<UserControl x:Class="RunnerTool.CreateTripControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:RunnerTool"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	d:DataContext="{x:Static local:DesignModels.CreateTripDesignModel}"
+	d:DesignHeight="400"
+	d:DesignWidth="600"
+	local:FocusProperty.Value="True"
+	Visibility="{Binding IsVisible, Converter={local:BooleanToVisibilityConverter}}"
+	mc:Ignorable="d">
+
+	<UserControl.InputBindings>
+		<KeyBinding Key="Esc"
+			Command="{Binding CloseCommand}" />
+	</UserControl.InputBindings>
+
+	<Grid>
+		<Border Style="{StaticResource Border}"
+			Background="{StaticResource GreenBackgroundBrush}">
+			<Grid Margin="4">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<!-- title bar -->
+				<Grid Margin="0">
+					<!-- title text -->
+					<TextBlock Style="{StaticResource CenterTextBlock}"
+						local:LToken.Value="{Binding TitleText}" />
+
+					<!-- close button -->
+					<TextBlock Style="{StaticResource CloseIconTextBlock}">
+						<TextBlock.InputBindings>
+							<MouseBinding Command="{Binding CloseCommand}"
+								MouseAction="LeftClick" />
+						</TextBlock.InputBindings>
+					</TextBlock>
+				</Grid>
+
+				<!-- content -->
+				<Border Grid.Row="1"
+					Style="{StaticResource Border}">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+
+						<!-- search bar / sender selection -->
+						<Grid Margin="5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+
+							<!-- search icon -->
+							<TextBlock Style="{StaticResource IconTextBlock}"
+								Text="{StaticResource FontAwesomeSearchIcon}"
+								Margin="5 0 10 0"
+								FontSize="{StaticResource Large}"
+								Foreground="White" />
+
+							<!-- search text -->
+							<TextBox Grid.Column="1"
+								Style="{StaticResource SearchTextBox}"
+								Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+								Margin="5 0" />
+
+							<!-- sender selection -->
+							<Border Grid.Column="2"
+								Margin="2 0 2 0"
+								Background="{Binding CurSender, Converter={local:SenderToBackgroundConverter}}"
+								CornerRadius="5">
+
+								<Border.InputBindings>
+									<MouseBinding Command="{Binding ShowSenderSelectionCommand}"
+										MouseAction="LeftClick" />
+								</Border.InputBindings>
+
+								<TextBlock Text="{Binding CurSender.ShortName}"
+									Width="60"
+									HorizontalAlignment="Center"
+									VerticalAlignment="Center"
+									FontFamily="{StaticResource LatoRegular}"
+									FontSize="{StaticResource Normal}"
+									Foreground="{StaticResource VeryDarkGrayBrush}"
+									TextAlignment="Center"
+									ToolTip="{Binding CurSender.Name}" />
+							</Border>
+
+							<!-- trip date -->
+							<DatePicker Grid.Column="3"
+								Margin="8 0 0 0"
+								FontFamily="{StaticResource LatoRegular}"
+								FontSize="{StaticResource Normal}"
+								SelectedDate="{Binding TripDateVM.Date}" />
+						</Grid>
+
+						<!-- destination selection -->
+						<Grid Grid.Row="1">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+
+							<!-- unselected destination -->
+							<Border Padding="3"
+								BorderBrush="{StaticResource GreenBackgroundBrush}"
+								BorderThickness="0 5 3 0">
+								<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+									VerticalScrollBarVisibility="Hidden">
+									<ItemsControl ItemsSource="{Binding CurSenderDestinationSelection.FilteredDestinationVMs}">
+										<ItemsControl.ItemsPanel>
+											<ItemsPanelTemplate>
+												<WrapPanel Orientation="Horizontal" />
+											</ItemsPanelTemplate>
+										</ItemsControl.ItemsPanel>
+
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<local:ListItemControl />
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+									</ItemsControl>
+								</ScrollViewer>
+							</Border>
+
+							<!-- selected destination -->
+							<Border Grid.Column="1"
+								Padding="3"
+								BorderBrush="{StaticResource GreenBackgroundBrush}"
+								BorderThickness="3 5 0 0">
+								<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+									VerticalScrollBarVisibility="Hidden">
+									<ItemsControl ItemsSource="{Binding CurSenderDestinationSelection.FilteredSelectedDestinationVMs}">
+										<ItemsControl.ItemsPanel>
+											<ItemsPanelTemplate>
+												<WrapPanel Orientation="Horizontal" />
+											</ItemsPanelTemplate>
+										</ItemsControl.ItemsPanel>
+
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<local:ListItemControl />
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+									</ItemsControl>
+								</ScrollViewer>
+							</Border>
+						</Grid>
+					</Grid>
+				</Border>
+
+				<!-- bottom buttons -->
+				<Grid Grid.Row="2"
+					Height="Auto"
+					Margin="3">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<!-- cancel button -->
+					<Button Margin="3"
+						VerticalAlignment="Top"
+						VerticalContentAlignment="Center"
+						local:LToken.Value="cancel"
+						Background="Red"
+						Command="{Binding CloseAndResetCommand}" />
+
+					<!-- right overlayed buttons -->
+					<Grid Grid.Column="1">
+						<!-- create button -->
+						<Button Grid.Column="1"
+							Margin="3"
+							VerticalAlignment="Top"
+							VerticalContentAlignment="Center"
+							local:LToken.Value="create"
+							Background="LimeGreen"
+							Command="{Binding CreateTripCommand}"
+							Visibility="{Binding IsCreateButtonVisible, Converter={local:BooleanToVisibilityConverter}}" />
+
+						<!-- edit finished button -->
+						<Button Grid.Column="1"
+							Margin="3"
+							VerticalAlignment="Top"
+							VerticalContentAlignment="Center"
+							local:LToken.Value="finish"
+							Background="LimeGreen"
+							Command="{Binding FinishEditCommand}"
+							Visibility="{Binding IsFinishEditButtonVisible, Converter={local:BooleanToVisibilityConverter}}" />
+					</Grid>
+				</Grid>
+			</Grid>
+		</Border>
+
+		<!-- overlay -->
+		<Grid Background="{StaticResource VeryDarkGrayBrushTransparent}"
+			Visibility="{Binding IsOverlayVisible, Converter={local:BooleanToVisibilityConverter}}">
+			<!-- sender selection -->
+			<local:SenderSelectionControl HorizontalAlignment="Center"
+				VerticalAlignment="Center" />
+
+			<!-- visit purpose selection -->
+			<local:VisitPurposeSelectionListControl />
+		</Grid>
+	</Grid>
+</UserControl>

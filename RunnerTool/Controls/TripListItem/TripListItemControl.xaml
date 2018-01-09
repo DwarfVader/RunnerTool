@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="RunnerTool.TripListItemControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:RunnerTool"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Height="Auto"
+	d:DataContext="{x:Static local:DesignModels.TripListItemDesignModel}"
+	d:DesignHeight="50"
+	d:DesignWidth="300"
+	ToolTip="{Binding Tooltip}"
+	mc:Ignorable="d">
+
+	<Border Padding="5"
+		Background="LightGray"
+		CornerRadius="5">
+		<Border.InputBindings>
+			<MouseBinding Command="{Binding ViewTripCommand}"
+				MouseAction="LeftClick" />
+			<MouseBinding Command="{Binding ExecuteTripCommand}"
+				MouseAction="RightClick" />
+		</Border.InputBindings>
+
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<!-- date -->
+				<ColumnDefinition Width="Auto" />
+
+				<!-- fill remaining space -->
+				<ColumnDefinition Width="*" />
+
+				<!-- trip finished? -->
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<TextBlock Text="{Binding DateFormatted}"
+				Margin="10 0"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Center"
+				FontFamily="{StaticResource LatoRegular}"
+				FontSize="{StaticResource Normal}" />
+
+			<TextBlock Grid.Column="2"
+				Text="{StaticResource FontAwesomeCheckSignIcon}"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Center"
+				FontFamily="{StaticResource FontAwesome}"
+				FontSize="{StaticResource Large}"
+				Foreground="LimeGreen"
+				Visibility="{Binding Trip.IsFinished, Converter={local:BooleanToVisibilityConverter}}" />
+		</Grid>
+	</Border>
+</UserControl>

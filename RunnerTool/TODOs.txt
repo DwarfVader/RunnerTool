@@ -1,0 +1,55 @@
+﻿TODO:
+
+*	is it possible to get rid of null checks like in ExecuteTripSenderListItemViewModel/CalcState()?
+
+*	use MoreLinq to get DistinctBy() instead of GroupBy().Select()
+
+*	is it sensible to store trip edit date?
+
+*	in CreateTripViewModel, get rid of artifacts of time before PropertyChangedContent
+
+*	do not mark creation of trips created for future dates as finished; further, do not allow creation 
+	of multiple trips for the same date; instead, force the user to create a new trip / finish creation 
+	of previously created trip and begin execution of that trip; 
+	if another trip gets created while execution, automatically jump back to execution frame
+	if a trip did not get executed, add all trip destinations to abandoned list in DB
+
+OPEN QUESTIONS / INSIGHTS:
+
+*	Fucking attached properties are static, such that only one instance exists! Therefore defining variables 
+	in the attached property class to store values per instance will not work as later values overwrite 
+	previous ones.
+
+*	VisitPurposeSelectionListControl: as by a mistake the data context (instead of the design data context) 
+	was set to the design model, the trip in ExecuteTripViewModel got set mysteriously, causing strange behavior. 
+	I could not find a connection between that design model and the ExecuteTripViewModel...
+
+COMPLETED:
+
+*	editing trip breaks something in trip execution such that it needs to be reloaded (by loading another 
+	trip before the actual trip)
+
+*	new senders for destination in executed trip should result in gray/unhandled state of destination; 
+	currently, unhandled states seem to be treated as finished
+
+*	senders do not get re-sorted by their type in sender selection if type changes
+
+*	view trip should display previously abandoned trip destinations
+
+*	editing trip should only be possible if trip has not already been executed; if it is not finished
+
+*	if trip gets created while another one is executed treat it as kind of template which does not get created 
+	upon click on create button; purpose is to avoid consuming trip destinations from abandoned list in DB 
+	(which could get removed from abandoned list as currently executed trip could change state of trip 
+	destination); these trips cannot be executed (need to be flagged as not created) but only edited where a
+	click on finish edit button inserts trip destination from abandoned list in DB and sets created flag; 
+	therefore need to differentiate between normal edit and creating edit via checking created flag
+
+*	possibility to display execution states of trip destinations within finished trips; maybe just use 
+	same frame without any manipulation possibilities
+
+*	change order of destinations in execution and order of trip destinations in viewing a trip such that
+	unavailable ones are at the end/bottom
+
+*	vacation list: correct finished marker; at which points in time / events should finished state be 
+	checked? -> Currently having a timer firing events each midnight

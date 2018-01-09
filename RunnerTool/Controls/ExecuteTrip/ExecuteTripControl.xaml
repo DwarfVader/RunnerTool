@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="RunnerTool.ExecuteTripControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:RunnerTool"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	d:DataContext="{x:Static local:DesignModels.ExecuteTripDesignModel}"
+	d:DesignHeight="400"
+	d:DesignWidth="600"
+	local:FocusProperty.Value="True"
+	Visibility="{Binding IsVisible, Converter={local:BooleanToVisibilityConverter}}"
+	mc:Ignorable="d">
+
+	<UserControl.InputBindings>
+		<KeyBinding Key="Esc"
+			Command="{Binding CloseCommand}" />
+	</UserControl.InputBindings>
+
+	<Grid>
+		<Border Style="{StaticResource Border}"
+			Background="{StaticResource GreenBackgroundBrush}">
+			<Grid Margin="4">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+
+				<!-- title bar -->
+				<Grid Margin="0">
+					<!-- title text -->
+					<TextBlock Style="{StaticResource CenterTextBlock}"
+						Text="{Binding TitleText}" />
+
+					<!-- close button -->
+					<TextBlock Style="{StaticResource CloseIconTextBlock}">
+						<TextBlock.InputBindings>
+							<MouseBinding Command="{Binding CloseCommand}"
+								MouseAction="LeftClick" />
+						</TextBlock.InputBindings>
+					</TextBlock>
+				</Grid>
+
+				<!-- content -->
+				<Border Grid.Row="1"
+					Style="{StaticResource Border}">
+					<Grid Margin="0 3">
+						<!-- destination list -->
+						<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+							VerticalScrollBarVisibility="Hidden">
+							<ItemsControl ItemsSource="{Binding DestinationListItemVMs}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<local:ExecuteTripDestinationListItemControl />
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</ScrollViewer>
+					</Grid>
+				</Border>
+			</Grid>
+		</Border>
+	</Grid>
+</UserControl>

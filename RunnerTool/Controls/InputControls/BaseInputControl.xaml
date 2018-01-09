@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="RunnerTool.BaseInputControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:RunnerTool"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Name="uc"
+	Height="Auto"
+	Margin="0 3"
+	d:DataContext="{x:Static local:DesignModels.BaseInputDesignModel}"
+	d:DesignWidth="300"
+	mc:Ignorable="d">
+
+	<Grid Background="Transparent">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+
+		<!-- label -->
+		<TextBlock x:Name="LabelText"
+			Margin="0 0 10 0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Center"
+			local:LToken.Value="{Binding LabelText, NotifyOnTargetUpdated=True}"
+			FontFamily="{StaticResource LatoRegular}"
+			FontSize="{StaticResource Normal}"
+			Foreground="White" />
+
+		<!-- content -->
+		<ContentPresenter Grid.Column="1"
+			Content="{Binding Path=ChildContent, ElementName=uc}" />
+	</Grid>
+</UserControl>

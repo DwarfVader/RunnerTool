@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="RunnerTool.DestinationSenderListControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:RunnerTool"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	d:DataContext="{x:Static local:DesignModels.DestinationSenderListDesignModel}"
+	d:DesignHeight="200"
+	d:DesignWidth="300"
+	mc:Ignorable="d">
+
+	<Border Margin="5 3"
+		Background="{Binding Background}"
+		CornerRadius="5">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<TextBlock Text="{Binding Destination.Name}"
+				Margin="10 5 0 0"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Center"
+				FontFamily="{StaticResource LatoRegular}"
+				FontSize="{StaticResource Normal}" />
+
+			<Border Grid.Row="1"
+				Margin="3"
+				Background="{StaticResource VeryDarkGrayBrush}"
+				CornerRadius="5">
+				<ItemsControl ItemsSource="{Binding TripDestinationVMs}">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<local:ListItemControl />
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</Border>
+		</Grid>
+	</Border>
+</UserControl>

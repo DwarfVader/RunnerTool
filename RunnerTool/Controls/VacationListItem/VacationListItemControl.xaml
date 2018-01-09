@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="RunnerTool.VacationListItemControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:RunnerTool"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Height="Auto"
+	d:DataContext="{x:Static local:DesignModels.VacationListItemDesignModel}"
+	d:DesignHeight="50"
+	d:DesignWidth="350"
+	local:LTokenTooltip.Value="{Binding Tooltip}"
+	mc:Ignorable="d">
+
+	<Border Padding="5"
+		Background="{Binding Vacation.Destination, Converter={local:DestinationTypeToBackgroundConverter}}"
+		CornerRadius="5">
+		<Border.InputBindings>
+			<MouseBinding Command="{Binding LeftClickCommand}"
+				MouseAction="LeftClick" />
+			<MouseBinding Command="{Binding RightClickCommand}"
+				MouseAction="RightClick" />
+		</Border.InputBindings>
+
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<!-- destination -->
+				<ColumnDefinition Width="Auto" />
+
+				<!-- date string -->
+				<ColumnDefinition Width="*" />
+
+				<!-- trip finished? -->
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<TextBlock Style="{StaticResource TextBlock}"
+				Text="{Binding Vacation.Destination.ShortName}"
+				Margin="10 0" />
+
+			<TextBlock Grid.Column="1"
+				Style="{StaticResource TextBlock}"
+				Text="{Binding DateString}"
+				Margin="10 0" />
+
+			<TextBlock Grid.Column="2"
+				Text="{StaticResource FontAwesomeCheckSignIcon}"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Center"
+				FontFamily="{StaticResource FontAwesome}"
+				FontSize="{StaticResource Large}"
+				Foreground="LimeGreen"
+				Visibility="{Binding Vacation.IsFinished, Converter={local:BooleanToVisibilityConverter}}" />
+		</Grid>
+	</Border>
+</UserControl>

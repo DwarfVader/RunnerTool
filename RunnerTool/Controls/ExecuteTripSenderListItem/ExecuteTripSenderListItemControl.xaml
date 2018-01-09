@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="RunnerTool.ExecuteTripSenderListItemControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:RunnerTool"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Height="Auto"
+	Margin="10 3"
+	d:DataContext="{x:Static local:DesignModels.ExecuteTripSenderListItemDesignModel}"
+	d:DesignWidth="300"
+	mc:Ignorable="d">
+
+	<Border Padding="5"
+		Background="{Binding State, Converter={local:ExecuteTripSenderStateColorConverter}}"
+		CornerRadius="5">
+		<Border.InputBindings>
+			<MouseBinding Command="{Binding ViewTripCommand}"
+				MouseAction="LeftClick" />
+		</Border.InputBindings>
+
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<!-- left part -->
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<!-- upper row -->
+				<Grid>
+					<TextBlock Style="{StaticResource TextBlock}"
+						Text="{Binding TripDestination.Sender.Name}" />
+				</Grid>
+
+				<!-- lower row -->
+				<ScrollViewer Grid.Row="1"
+					HorizontalAlignment="Left"
+					HorizontalScrollBarVisibility="Hidden"
+					VerticalScrollBarVisibility="Disabled">
+					<ItemsControl ItemsSource="{Binding VisitPurposeVMs}">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal" />
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Style="{StaticResource TextBlock}"
+									local:LToken.Value="{Binding VisitPurpose.Type}"
+									Foreground="{Binding StateTemp, Converter={local:VisitPurposeStateForegroundConverter}}">
+									<TextBlock.InputBindings>
+										<MouseBinding Command="{Binding ToggleStateCommand}"
+											MouseAction="LeftClick" />
+									</TextBlock.InputBindings>
+								</TextBlock>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</ScrollViewer>
+			</Grid>
+
+			<!-- right part -->
+			<StackPanel Grid.Column="1"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Top"
+				Orientation="Vertical">
+
+				<!-- abandon button -->
+				<TextBlock Style="{StaticResource IconTextBlock}"
+					Text="{StaticResource FontAwesomeCloseIcon}"
+					HorizontalAlignment="Right"
+					FontSize="{StaticResource Large}"
+					Foreground="Red"
+					Visibility="{Binding TripDestination.Trip.IsFinished, Converter={local:BooleanToVisibilityCollapsedConverter}, ConverterParameter=True}">
+					<TextBlock.InputBindings>
+						<MouseBinding Command="{Binding AbandonCommand}"
+							MouseAction="LeftClick" />
+					</TextBlock.InputBindings>
+				</TextBlock>
+			</StackPanel>
+		</Grid>
+	</Border>
+</UserControl>

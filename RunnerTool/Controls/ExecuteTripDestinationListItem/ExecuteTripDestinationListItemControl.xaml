@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="RunnerTool.ExecuteTripDestinationListItemControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:RunnerTool"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Height="Auto"
+	Margin="10 3"
+	d:DataContext="{x:Static local:DesignModels.ExecuteTripDestinationListItemDesignModel}"
+	d:DesignHeight="50"
+	d:DesignWidth="300"
+	ToolTip="{Binding Tooltip}"
+	mc:Ignorable="d">
+
+	<UserControl.InputBindings>
+		<MouseBinding Command="{Binding ShowExecuteDestinationViewCommand}"
+			MouseAction="LeftClick" />
+	</UserControl.InputBindings>
+
+	<Border Padding="5"
+		Background="{Binding State, Converter={local:ExecuteTripDestinationStateColorConverter}}"
+		CornerRadius="5">
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<!-- name -->
+				<ColumnDefinition Width="Auto" />
+
+				<!-- trip finished? -->
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<TextBlock Style="{StaticResource TextBlock}"
+				Text="{Binding Destination.Name}"
+				Margin="10 0 20 0" />
+
+			<StackPanel Grid.Column="1"
+				HorizontalAlignment="Right"
+				Orientation="Horizontal">
+
+				<!-- sender count -->
+				<TextBlock Style="{StaticResource TextBlock}"
+					Text="{Binding SenderCount}" />
+				<!-- sender icon -->
+				<TextBlock Style="{StaticResource IconTextBlock}"
+					Text="{StaticResource FontAwesomeSenderIcon}" />
+
+				<!-- abandon button -->
+				<TextBlock Style="{StaticResource IconTextBlock}"
+					Text="{StaticResource FontAwesomeCloseIcon}"
+					HorizontalAlignment="Right"
+					FontSize="{StaticResource Large}"
+					Foreground="Red"
+					Visibility="{Binding IsAbandonButtonVisible, Converter={local:BooleanToVisibilityCollapsedConverter}}">
+					<TextBlock.InputBindings>
+						<MouseBinding Command="{Binding AbandonDestinationCommand}"
+							MouseAction="LeftClick" />
+					</TextBlock.InputBindings>
+				</TextBlock>
+			</StackPanel>
+		</Grid>
+	</Border>
+</UserControl>
